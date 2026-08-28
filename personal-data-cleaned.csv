@@ -1,0 +1,5 @@
+user_id,name,email,ip_address,country,signup_date
+U001,Alice Martin,alice.martin@example.com,192.168.1.10,FR,2024-01-15
+U002,Bob Schmidt,bob.schmidt@example.com,10.0.0.5,DE,2024-02-20
+U004,David Müller,david.muller@example.com,10.10.1.2,DE,2024-04-05
+U005,Emma Dupont,emma.dupont@example.com,192.168.2.20,FR,2024-05-12

@@ -1,0 +1,33 @@
+# Evidence capture: bucket location + default encryption
+# Bucket: gdpr-personal-data-1787900583
+$ aws s3api get-bucket-location --bucket $BUCKET
+{
+    "LocationConstraint": "eu-west-1"
+}
+
+$ aws s3api get-bucket-encryption --bucket $BUCKET
+{
+    "ServerSideEncryptionConfiguration": {
+        "Rules": [
+            {
+                "ApplyServerSideEncryptionByDefault": {
+                    "SSEAlgorithm": "AES256"
+                },
+                "BucketKeyEnabled": true,
+                "BlockedEncryptionTypes": {
+                    "EncryptionType": [
+                        "SSE-C"
+                    ]
+                }
+            }
+        ]
+    }
+}
+
+$ aws s3api get-bucket-policy --bucket $BUCKET
+{"Version":"2012-10-17","Statement":[{"Sid":"DenyUnencryptedUploads","Effect":"Deny","Principal":"*","Action":"s3:PutObject","Resource":"arn:aws:s3:::gdpr-personal-data-1787900583/*","Condition":{"StringNotEquals":{"s3:x-amz-server-side-encryption":"AES256"}}}]}
+
+$ aws s3api get-bucket-versioning --bucket $BUCKET
+{
+    "Status": "Enabled"
+}

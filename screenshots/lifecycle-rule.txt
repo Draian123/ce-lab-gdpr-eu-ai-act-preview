@@ -1,0 +1,47 @@
+# Evidence capture: lifecycle retention rule + object tags
+# Bucket: gdpr-personal-data-1787900583
+$ aws s3api get-bucket-lifecycle-configuration --bucket $BUCKET
+{
+    "TransitionDefaultMinimumObjectSize": "all_storage_classes_128K",
+    "Rules": [
+        {
+            "Expiration": {
+                "Days": 30
+            },
+            "ID": "gdpr-30-day-retention",
+            "Filter": {
+                "Tag": {
+                    "Key": "DataClassification",
+                    "Value": "PersonalData"
+                }
+            },
+            "Status": "Enabled",
+            "NoncurrentVersionExpiration": {
+                "NoncurrentDays": 7
+            }
+        }
+    ]
+}
+
+$ aws s3api get-object-tagging --bucket $BUCKET --key users/personal-data.csv
+{
+    "VersionId": "OA8BertmV3YYFWJYtneT5dQ9vHvGEU12",
+    "TagSet": [
+        {
+            "Key": "GDPRArticle",
+            "Value": "4"
+        },
+        {
+            "Key": "DataClassification",
+            "Value": "PersonalData"
+        },
+        {
+            "Key": "RetentionDays",
+            "Value": "30"
+        },
+        {
+            "Key": "LegalBasis",
+            "Value": "Consent"
+        }
+    ]
+}

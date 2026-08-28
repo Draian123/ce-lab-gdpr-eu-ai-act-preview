@@ -1,0 +1,23 @@
+# Evidence capture: Right to Erasure (Article 17) verification for U003 / Clara Rossi
+# Bucket: gdpr-personal-data-1787900583
+
+## Object versions remaining after purge of pre-erasure versions
+$ aws s3api list-object-versions --bucket $BUCKET --prefix users/personal-data.csv
+-------------------------------------------------------------------------------
+|                             ListObjectVersions                              |
++----------+-----------------------------+------------------------------------+
+| IsLatest |        LastModified         |             VersionId              |
++----------+-----------------------------+------------------------------------+
+|  True    |  2026-08-28T07:04:24+00:00  |  OA8BertmV3YYFWJYtneT5dQ9vHvGEU12  |
++----------+-----------------------------+------------------------------------+
+
+## Current object content
+user_id,name,email,ip_address,country,signup_date
+U001,Alice Martin,alice.martin@example.com,192.168.1.10,FR,2024-01-15
+U002,Bob Schmidt,bob.schmidt@example.com,10.0.0.5,DE,2024-02-20
+U004,David Müller,david.muller@example.com,10.10.1.2,DE,2024-04-05
+U005,Emma Dupont,emma.dupont@example.com,192.168.2.20,FR,2024-05-12
+
+## Verification
+$ grep "U003" verify.csv && echo "ERROR: Record still exists!" || echo "SUCCESS: U003 record removed."
+SUCCESS: U003 record removed.

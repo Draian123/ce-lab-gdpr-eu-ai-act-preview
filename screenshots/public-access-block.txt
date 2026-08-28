@@ -1,0 +1,11 @@
+# Evidence capture: S3 Block Public Access (all four settings)
+# Bucket: gdpr-personal-data-1787900583
+$ aws s3api get-public-access-block --bucket $BUCKET
+{
+    "PublicAccessBlockConfiguration": {
+        "BlockPublicAcls": true,
+        "IgnorePublicAcls": true,
+        "BlockPublicPolicy": true,
+        "RestrictPublicBuckets": true
+    }
+}
